@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guía Turística Brasil 2025 — Janna, Juan y Alison</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      color: #f0f0f0;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+    }
+    header h1 { font-size: 2.2rem; color: #FFD700; text-shadow: 0 2px 10px rgba(255,215,0,0.5); }
+    header p { color: #aaa; margin-top: 8px; font-size: 1rem; }
+    header .dates { color: #66D9E8; font-size: 0.95rem; margin-top: 6px; }
+
+    /* CITY BUTTONS */
+    .city-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px 20px;
+      flex-wrap: wrap;
+    }
+    .city-btn {
+      padding: 16px 40px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .city-btn.sp {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+      box-shadow: 0 6px 20px rgba(231,76,60,0.4);
+    }
+    .city-btn.rio {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+      box-shadow: 0 6px 20px rgba(46,204,113,0.4);
+    }
+    .city-btn:hover { transform: translateY(-3px); filter: brightness(1.15); }
+    .city-btn.active { transform: translateY(-3px) scale(1.05); filter: brightness(1.2); }
+
+    /* CITY SECTION */
+    .city-section { display: none; padding: 0 20px 40px; max-width: 1200px; margin: 0 auto; }
+    .city-section.active { display: block; }
+
+    .city-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      padding: 20px 0 10px;
+    }
+    .city-subtitle { text-align: center; color: #aaa; margin-bottom: 30px; font-size: 0.95rem; }
+
+    /* GROUP BUTTONS */
+    .group-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .group-btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .group-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
+    .group-btn.active { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); filter: brightness(1.25); }
+
+    /* Colors per group */
+    .g-museos    { background: #9b59b6; color: white; }
+    .g-parques   { background: #27ae60; color: white; }
+    .g-ferias    { background: #e67e22; color: white; }
+    .g-comida    { background: #e74c3c; color: white; }
+    .g-vida      { background: #2c3e50; color: white; border: 1px solid #7f8c8d; }
+    .g-playas    { background: #3498db; color: white; }
+    .g-icónicas  { background: #f39c12; color: white; }
+    .g-samba     { background: #8e44ad; color: white; }
+    .g-especial  { background: #16a085; color: white; }
+    .g-restaurantes { background: #c0392b; color: white; }
+    .g-barrios   { background: #2980b9; color: white; }
+
+    /* GROUP CONTENT */
+    .group-content { display: none; }
+    .group-content.active { display: block; }
+
+    .group-header {
+      padding: 16px 22px;
+      border-radius: 12px 12px 0 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    /* CARDS */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+    .card-header {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .card-name { font-size: 1.05rem; font-weight: 700; color: #fff; flex: 1; }
+    .card-name span { font-size: 0.85rem; color: #FFD700; }
+
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-gratis { background: #3498db; color: white; }
+    .badge-precio { background: #27ae60; color: white; }
+
+    .card-body { padding: 0 18px 16px; }
+    .card-desc { color: #ccc; font-size: 0.88rem; line-height: 1.5; margin-bottom: 12px; }
+
+    .card-meta { display: flex; flex-direction: column; gap: 6px; }
+    .meta-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.83rem;
+    }
+    .meta-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .meta-text { color: #bbb; }
+    .meta-text strong { color: #fff; }
+
+    /* FREE INFO FOOTER */
+    .free-info-section {
+      background: rgba(52, 152, 219, 0.12);
+      border: 1px solid rgba(52, 152, 219, 0.4);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-top: 30px;
+    }
+    .free-info-section h3 {
+      color: #66D9E8;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .free-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .free-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #ddd;
+      background: rgba(52,152,219,0.08);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border-left: 3px solid #3498db;
+    }
+    .free-list li strong { color: #fff; }
+    .free-badge {
+      background: #3498db;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    @media(max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .cards-container { grid-template-columns: 1fr; }
+      .city-btn { padding: 12px 24px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🗺️ GUÍA TURÍSTICA — BRASIL 2025</h1>
+  <p>Janna, Juan y Alison</p>
+  <p class="dates">📅 Mayo 21–30 &nbsp;|&nbsp; 1 BRL ≈ $744 COP</p>
+</header>
+
+<!-- CITY NAVIGATION -->
+<div class="city-nav">
+  <button class="city-btn sp" onclick="showCity('sp')">🏙️ São Paulo</button>
+  <button class="city-btn rio" onclick="showCity('rio')">🌊 Río de Janeiro</button>
+</div>
+
+<!-- ===================== SÃO PAULO ===================== -->
+<div id="city-sp" class="city-section">
+  <div class="city-title" style="color:#e74c3c;">🏙️ SÃO PAULO</div>
+  <div class="city-subtitle">Jueves 21 noche — Domingo 24 madrugada</div>
+
+  <div class="group-nav">
+    <button class="group-btn g-museos active" onclick="showGroup('sp','museos',this)">🖼️ Museos y Cultura</button>
+    <button class="group-btn g-parques" onclick="showGroup('sp','parques',this)">🌿 Parques y Naturaleza</button>
+    <button class="group-btn g-ferias" onclick="showGroup('sp','ferias',this)">🛍️ Ferias y Zonas</button>
+    <button class="group-btn g-comida" onclick="showGroup('sp','comida',this)">🍽️ Comida y Bebidas</button>
+    <button class="group-btn g-vida" onclick="showGroup('sp','vida',this)">🎶 Vida Nocturna</button>
+  </div>
+
+  <!-- MUSEOS SP -->
+  <div id="sp-museos" class="group-content active">
+    <div class="group-header g-museos">🖼️ Museos y Cultura</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">MASP <span>⭐</span><br/><small style="color:#aaa;font-weight:400;">Museo de Arte de São Paulo</small></div>
+          <span class="badge badge-precio">R$ 75 (~$55.800 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">El museo de arte más importante de Brasil, icónico sobre pilotis en la Av. Paulista. Obras de Picasso, Rembrandt, Van Gogh.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 10h–18h / <strong>Jue</strong> hasta 20h. Cerrado lunes.</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Gratis los martes</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Pinacoteca de São Paulo<br/><small style="color:#aaa;font-weight:400;">Arte brasileño histórico</small></div>
+          <span class="badge badge-precio">R$ 30 (~$22.320 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">El museo de arte más antiguo de São Paulo. Arte brasileño del siglo XIX al contemporáneo. Edificio histórico hermoso.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mié–Lun</strong> 10h–18h / <strong>Jue</strong> hasta 20h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Gratis los sábados</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu do Ipiranga<br/><small style="color:#aaa;font-weight:400;">Museu Paulista</small></div>
+          <span class="badge badge-precio">R$ 30 (~$22.320 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Museo histórico donde se proclamó la independencia de Brasil. Cuadro "Independência ou Morte" original. Jardines espectaculares.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 10h–17h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Gratis 1er domingo del mes</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu da Língua Portuguesa<br/><small style="color:#aaa;font-weight:400;">Estação da Luz</small></div>
+          <span class="badge badge-precio">R$ 24 (~$17.850 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Dedicado a la lengua portuguesa con instalaciones inmersivas, tecnología y arte. En la histórica Estação da Luz.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 9h–16h30</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Gratis sábados y domingos</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu do Futebol<br/><small style="color:#aaa;font-weight:400;">Estadio Pacaembú</small></div>
+          <span class="badge badge-precio">R$ 24 (~$17.850 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Para los amantes del fútbol. Historia completa del fútbol brasileño con instalaciones interactivas. Dentro del Estadio del Pacaembú.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 9h–18h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Gratis los martes</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu de Arte Sacra<br/><small style="color:#aaa;font-weight:400;">Arte religioso colonial</small></div>
+          <span class="badge badge-precio">R$ 6 (~$4.460 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Arte religioso colonial brasileño. Impresionante colección de imágenes, orfebrería y muebles barrocos.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 9h–17h</span></div>
+            <div class="meta-row"><span class="meta-icon">💰</span><span class="meta-text">Sin horario gratuito disponible</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PARQUES SP -->
+  <div id="sp-parques" class="group-content">
+    <div class="group-header g-parques">🌿 Parques y Naturaleza</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Jardim Botânico de SP<br/><small style="color:#aaa;font-weight:400;">+3.000 especies</small></div>
+          <span class="badge badge-precio">R$ 5 (~$3.720 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Área verde enorme con más de 3.000 especies de plantas, orquídeas, palmeras y senderos tranquilos. Ideal para descansar.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 9h–17h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Niños hasta 7 años gratis</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Ibirapuera Park<br/><small style="color:#aaa;font-weight:400;">El Central Park paulistano</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Inmenso parque con lagos, museos, auditorios, pistas para bici/correr. Tiene dentro el Museu Afro-Brasil y el MAM.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 5h–22h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Siempre gratuito</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Zoológico de São Paulo<br/><small style="color:#aaa;font-weight:400;">+3.000 animales</small></div>
+          <span class="badge badge-precio">R$ 42 (~$31.240 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Uno de los más grandes de América Latina. Más de 3.000 animales. 🌟 <em>Especial mayo: madres no pagan.</em></p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Vie</strong> 9h–16h / <strong>Sáb–Dom</strong> 8h30–17h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Parque da Aclimação<br/><small style="color:#aaa;font-weight:400;">Parque histórico</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Pequeño parque histórico tranquilo cerca del centro. Ideal para un paseo relajado con cisnes en el lago.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 6h–18h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Siempre gratuito</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FERIAS SP -->
+  <div id="sp-ferias" class="group-content">
+    <div class="group-header g-ferias">🛍️ Ferias, Mercados y Zonas Turísticas</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Mercado Municipal<br/><small style="color:#aaa;font-weight:400;">El Mercadão</small></div>
+          <span class="badge badge-gratis">GRATIS ENTRAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Mercado histórico de 1933. Imprescindible para probar el famoso sándwich de mortadela, frutas tropicales y pasteles.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Sáb</strong> 6h–18h / <strong>Dom</strong> 6h–16h</span></div>
+            <div class="meta-row"><span class="meta-icon">🥪</span><span class="meta-text">Sándwich mortadela ~R$ 20</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Feira da Liberdade<br/><small style="color:#aaa;font-weight:400;">Bairro Liberdade</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Feria japonesa en el barrio oriental de São Paulo. Comida asiática, artesanías, ropa. Patrimonio cultural de SP.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Domingos</strong> 10h–18h</span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Siempre gratuito</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Av. Paulista<br/><small style="color:#aaa;font-weight:400;">La gran avenida de SP</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Museos, restaurantes, tiendas, vida cultural intensa. Los domingos está cerrada al tráfico para peatones y ciclistas.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Abierta 24h / <strong>Domingos peatonal</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Bairro da Liberdade<br/><small style="color:#aaa;font-weight:400;">Barrio japonés</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Barrio japonés más grande fuera de Asia. Restaurantes, tiendas de anime, ramen, temakis. Vale explorar a pie.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Siempre abierto</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Vila Madalena<br/><small style="color:#aaa;font-weight:400;">Beco do Batman</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Barrio bohemio con murales, el famoso Beco do Batman (callejón de graffitis), galerías de arte, bares y cafés.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Siempre / <strong>Mejor de día</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMIDA SP -->
+  <div id="sp-comida" class="group-content">
+    <div class="group-header g-comida">🍽️ Comida y Bebidas — Qué Probar en SP</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Virado à Paulista<br/><small style="color:#aaa;font-weight:400;">Plato típico paulistano</small></div>
+          <span class="badge badge-precio">R$ 30–50 (~$22.000–37.000)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Arroz, fríjoles revueltos con harina, bisteca de cerdo, salchicha, plátano frito, huevo frito y col salteada.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Restaurantes tradicionales del centro</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Sándwich de Mortadela<br/><small style="color:#aaa;font-weight:400;">Bar do Mané</small></div>
+          <span class="badge badge-precio">R$ 20 (~$14.880 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Pan francés con 300g de mortadela Ceratti. Icónico del Mercado Municipal. ¡Imprescindible!</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text"><strong>Bar do Mané</strong> – Mercado Municipal</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Coxinha<br/><small style="color:#aaa;font-weight:400;">Croqueta brasileña</small></div>
+          <span class="badge badge-precio">R$ 5–8 (~$3.720–5.950)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Croqueta en forma de muslo rellena de pollo desmenuzado con catupiry (queso crema).</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Panaderías y bares por toda SP</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Brigadeiro<br/><small style="color:#aaa;font-weight:400;">Dulce nacional</small></div>
+          <span class="badge badge-precio">R$ 3–6 (~$2.230–4.460)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Bolita de chocolate condensado cubierta en chispas. El dulce más querido de Brasil.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Dulcerías y cafeterías</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Caipirinha<br/><small style="color:#aaa;font-weight:400;">Cóctel nacional</small></div>
+          <span class="badge badge-precio">R$ 15–25 (~$11.160–18.600)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Cachaça (aguardiente de caña), lima machacada, azúcar y hielo. El cóctel más famoso de Brasil.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Cualquier bar o restaurante</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Chope (Chopp)<br/><small style="color:#aaa;font-weight:400;">Cerveza tirada artesanal</small></div>
+          <span class="badge badge-precio">R$ 6–12 (~$4.460–8.928)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Cerveza tirada artesanal brasileña. Rubia y fresca. Imprescindible en botecos y bares.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Botecos y bares</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Açaí na tigela<br/><small style="color:#aaa;font-weight:400;">Energizante</small></div>
+          <span class="badge badge-precio">R$ 15–30 (~$11.160–22.320)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Pulpa de açaí con granola, banana, miel. Energizante y delicioso.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Fruterías y snack bars</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Pastel<br/><small style="color:#aaa;font-weight:400;">Empanada frita</small></div>
+          <span class="badge badge-precio">R$ 8–15 (~$5.950–11.160)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Empanada frita crujiente con rellenos variados: queso, carne, camarón, palmito.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Ferias y mercados</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- VIDA NOCTURNA SP -->
+  <div id="sp-vida" class="group-content">
+    <div class="group-header g-vida">🎶 Vida Nocturna en São Paulo</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Vila Madalena<br/><small style="color:#aaa;font-weight:400;">Zona de bares</small></div>
+          <span class="badge badge-precio">R$ 0–30 cover</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Zona de bares, música en vivo, samba, bossa nova y coctelerías de moda. El barrio más animado de SP.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Desde 20h hasta madrugada</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Beco do Batman<br/><small style="color:#aaa;font-weight:400;">Galería y bares nocturnos</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Durante el día es galería callejera; de noche, la zona se llena de bares creativos alrededor.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Desde 19h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Audio Club<br/><small style="color:#aaa;font-weight:400;">Discoteca electrónica</small></div>
+          <span class="badge badge-precio">R$ 80–200 (~$59.520–148.800)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Una de las discotecas de música electrónica más importantes de América Latina. DJs internacionales.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Vie–Sáb</strong> desde 23h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Bar Balcão<br/><small style="color:#aaa;font-weight:400;">Pinheiros</small></div>
+          <span class="badge badge-precio">Consumo mínimo</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Bar icónico de Pinheiros. Música en vivo, cocktails, ambiente adulto y cultural.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Sáb</strong> 18h–2h</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FREE INFO SP -->
+  <div class="free-info-section">
+    <h3>🆓 Resumen de Horarios Gratuitos — São Paulo</h3>
+    <ul class="free-list">
+      <li><span class="free-badge">MARTES</span><div><strong>MASP</strong> — Entrada gratuita todos los martes (10h–18h)</div></li>
+      <li><span class="free-badge">MARTES</span><div><strong>Museu do Futebol</strong> — Entrada gratuita todos los martes (9h–18h)</div></li>
+      <li><span class="free-badge">SÁBADOS</span><div><strong>Pinacoteca de São Paulo</strong> — Entrada gratuita todos los sábados (10h–18h)</div></li>
+      <li><span class="free-badge">SÁB Y DOM</span><div><strong>Museu da Língua Portuguesa</strong> — Entrada gratuita sábados y domingos (9h–16h30)</div></li>
+      <li><span class="free-badge">1° DOMINGO</span><div><strong>Museu do Ipiranga</strong> — Gratuito el primer domingo de cada mes (10h–17h)</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Ibirapuera Park</strong> — Siempre gratuito (5h–22h)</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Parque da Aclimação</strong> — Siempre gratuito (6h–18h)</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Av. Paulista</strong> — Siempre gratuita. Domingos peatonal.</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Bairro da Liberdade + Vila Madalena + Beco do Batman</strong> — Exploración siempre gratuita</div></li>
+      <li><span class="free-badge">DOMINGOS</span><div><strong>Feira da Liberdade</strong> — Siempre gratuito (domingos 10h–18h)</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Mercado Municipal</strong> — Entrada gratuita (consumo opcional)</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===================== RÍO DE JANEIRO ===================== -->
+<div id="city-rio" class="city-section">
+  <div class="city-title" style="color:#2ecc71;">🌊 RÍO DE JANEIRO</div>
+  <div class="city-subtitle">Domingo 24 — Viernes 30 de mayo | Apartamento en Copacabana</div>
+
+  <div class="group-nav">
+    <button class="group-btn g-museos active" onclick="showGroup('rio','museos',this)">🖼️ Museos y Cultura</button>
+    <button class="group-btn g-parques" onclick="showGroup('rio','parques',this)">🌿 Parques</button>
+    <button class="group-btn g-playas" onclick="showGroup('rio','playas',this)">🏖️ Playas</button>
+    <button class="group-btn g-icónicas" onclick="showGroup('rio','iconicas',this)">🚡 Atracciones</button>
+    <button class="group-btn g-samba" onclick="showGroup('rio','samba',this)">🎶 Samba y Noche</button>
+    <button class="group-btn g-comida" onclick="showGroup('rio','comida',this)">🍽️ Comida</button>
+    <button class="group-btn g-restaurantes" onclick="showGroup('rio','restaurantes',this)">🍴 Restaurantes</button>
+    <button class="group-btn g-especial" onclick="showGroup('rio','especial',this)">🌅 Experiencias Únicas</button>
+    <button class="group-btn g-barrios" onclick="showGroup('rio','barrios',this)">🌏 Barrios</button>
+  </div>
+
+  <!-- MUSEOS RIO -->
+  <div id="rio-museos" class="group-content active">
+    <div class="group-header g-museos">🖼️ Museos y Cultura</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Real Gabinete Português ⭐<br/><small style="color:#aaa;font-weight:400;">Una de las bibliotecas más bellas del mundo</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Una de las bibliotecas más hermosas del mundo. Arquitectura manuelina portuguesa del siglo XIX. Más de 350.000 libros raros. ¡Entrada gratuita!</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Vie</strong> 9h–18h <em>(cerrado fines de semana)</em></span></div>
+            <div class="meta-row"><span class="meta-icon">🆓</span><span class="meta-text" style="color:#66D9E8;"><strong>Siempre gratuito</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu do Amanhã<br/><small style="color:#aaa;font-weight:400;">Puerto Maravilla</small></div>
+          <span class="badge badge-precio">R$ 30 (~$22.320 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Museo de ciencias futurista sobre el futuro del planeta. Diseño arquitectónico espectacular frente a la bahía en el Puerto Maravilla.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 10h–18h</span></div>
+            <div class="meta-row"><span class="meta-icon">💰</span><span class="meta-text">Meia entrada R$ 15</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Confeitaria Colombo ⭐<br/><small style="color:#aaa;font-weight:400;">Café histórico 1894 — Centro</small></div>
+          <span class="badge badge-gratis">ENTRADA LIBRE</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Café histórico de 1894. Arquitectura art nouveau con espejos belgas, vitreaux y mármoles. Almuerzo buffet y pastelería icónica.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Sáb</strong> 11h–18h / Buffet 12h–16h <em>(Dom cerrado)</em></span></div>
+            <div class="meta-row"><span class="meta-icon">🍽️</span><span class="meta-text">Buffet almuerzo R$ 69,90 (~$52.000 COP)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu Nacional de Belas Artes<br/><small style="color:#aaa;font-weight:400;">Arte colonial al moderno</small></div>
+          <span class="badge badge-precio">R$ 30 (~$22.320 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Arte brasileño e internacional desde el período colonial hasta el moderno. Hermoso edificio neoclásico.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Vie</strong> 10h–18h / <strong>Sáb–Dom</strong> 12h–17h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Museu Histórico Nacional<br/><small style="color:#aaa;font-weight:400;">Mayor colección histórica del país</small></div>
+          <span class="badge badge-precio">R$ 10 (~$7.440 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Colección histórica más grande del país. Arte, documentos y objetos del Brasil colonial, imperial y republicano.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Vie</strong> 10h–17h30 / <strong>Sáb–Dom</strong> 14h–17h</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PARQUES RIO -->
+  <div id="rio-parques" class="group-content">
+    <div class="group-header g-parques">🌿 Parques y Naturaleza</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Jardim Botânico do Rio<br/><small style="color:#aaa;font-weight:400;">137 hectáreas</small></div>
+          <span class="badge badge-precio">R$ 40 (~$29.760 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Jardín de 137 hectáreas con más de 6.500 especies. Palmeiras imperiais, orquídeas, lago de nenúfares gigantes.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 8h–17h</span></div>
+            <div class="meta-row"><span class="meta-icon">ℹ️</span><span class="meta-text">Extranjeros: R$ 80</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Parque Lage<br/><small style="color:#aaa;font-weight:400;">Al pie del Corcovado</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Palacete rodeado de Mata Atlántica al pie del Corcovado. Piscina natural, cafetería dentro del palacio. Acceso libre.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 8h–17h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Floresta da Tijuca<br/><small style="color:#aaa;font-weight:400;">Bosque urbano más grande del mundo</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Bosque urbano más grande del mundo. Cascadas, senderos y fauna nativa dentro de la ciudad.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 8h–17h</span></div>
+            <div class="meta-row"><span class="meta-icon">ℹ️</span><span class="meta-text">Algunas atracciones internas pagan</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Vista Chinesa<br/><small style="color:#aaa;font-weight:400;">Mirador panorámico 360°</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Mirador dentro de la Floresta da Tijuca. Vistas panorámicas 360° de Río.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 9h–17h</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PLAYAS RIO -->
+  <div id="rio-playas" class="group-content">
+    <div class="group-header g-playas">🏖️ Playas</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Copacabana 🏠<br/><small style="color:#aaa;font-weight:400;">¡Al frente de su apartamento!</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">La playa más famosa del mundo. Arena extensa, quioscos, ambiente vibrante. Puestas de sol épicas. ¡Están al frente!</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">24h / Baño recomendado hasta 18h</span></div>
+            <div class="meta-row"><span class="meta-icon">🪑</span><span class="meta-text">Silla + sombrilla R$ 10–20</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Ipanema<br/><small style="color:#aaa;font-weight:400;">Posto 9 — la más icónica</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Playa de ambiente sofisticado. La zona del Posto 9 es la más icónica. Mejor para ver puesta de sol.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">24h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Leblon<br/><small style="color:#aaa;font-weight:400;">Tranquila y residencial</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Contigua a Ipanema, más tranquila y residencial. Las olas son mejores y hay menos turistas.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">24h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Praia de Joatinga ⭐<br/><small style="color:#aaa;font-weight:400;">La "Beverly Hills carioca"</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Playa escondida entre rocas. Aguas turquesas cristalinas. ⚠️ Verificar mareas: desaparece con marea alta. Acceso por Estrada do Joá.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">5h–18h aprox. <em>(depende de mareas)</em></span></div>
+            <div class="meta-row"><span class="meta-icon">🚗</span><span class="meta-text">Solo Uber / carro particular</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Praia Vermelha<br/><small style="color:#aaa;font-weight:400;">Al pie del Pan de Azúcar</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Pequeña playa protegida al pie del Pan de Azúcar. Aguas calmas y verde selva al fondo. Menos masificada.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">24h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Prainha<br/><small style="color:#aaa;font-weight:400;">Favorita de surfistas</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Una de las playas más naturales y preservadas de Río. Favorita de surfistas. Lejos del centro pero vale el viaje.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">5h–17h</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ICONICAS RIO -->
+  <div id="rio-iconicas" class="group-content">
+    <div class="group-header g-icónicas">🚡 Actividades y Atracciones Icónicas</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Bondinho Pão de Açúcar ⭐<br/><small style="color:#aaa;font-weight:400;">Teleférico 395m</small></div>
+          <span class="badge badge-precio">R$ 220 (~$163.680 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Teleférico en dos tramos hasta la cima del Pan de Azúcar. Vistas 360° de Río. Imprescindible al atardecer. Incluye Morro da Urca.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 8h–19h30</span></div>
+            <div class="meta-row"><span class="meta-icon">👶</span><span class="meta-text">Niños 6–11 años R$ 110</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Cristo Redentor<br/><small style="color:#aaa;font-weight:400;">Corcovado 710m</small></div>
+          <span class="badge badge-precio">R$ 128–134 (~$95.230–99.700)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">La estatua más icónica del mundo. En lo alto del Corcovado. Vista panorámica de toda la bahía. Tren o van para subir.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 8h–18h</span></div>
+            <div class="meta-row"><span class="meta-icon">🚂</span><span class="meta-text">Precio incluye tren</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">AquaRio ⭐<br/><small style="color:#aaa;font-weight:400;">Mayor acuario de Sudamérica</small></div>
+          <span class="badge badge-precio">R$ 60–80 (~$44.640–59.520)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">El acuario más grande de América del Sur. Más de 8.000 animales marinos. Túnel subacuático, tiburones, rayas. Puerto Maravilla.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Vie</strong> 9h–17h / <strong>Sáb–Dom</strong> 9h–18h</span></div>
+            <div class="meta-row"><span class="meta-icon">ℹ️</span><span class="meta-text">Verificar precio en web oficial</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Estadio Maracaná (tour)<br/><small style="color:#aaa;font-weight:400;">El estadio más famoso del mundo</small></div>
+          <span class="badge badge-precio">R$ 70 (~$52.080 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Tour por el estadio de fútbol más famoso del mundo. Vestuarios, campo, museo. Experiencia única para fanáticos.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 9h–16h aprox.</span></div>
+            <div class="meta-row"><span class="meta-icon">💰</span><span class="meta-text">Meia entrada R$ 35</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Vuelo en Helicóptero ⭐<br/><small style="color:#aaa;font-weight:400;">15–20 min sobre Río</small></div>
+          <span class="badge badge-precio">R$ 660–1.100 (~$490.000–818.000)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Sobrevolar Río viendo el Cristo, Pão de Açúcar, Copacabana, Ipanema e Joatinga desde el aire. Operadoras: Flying in Rio, Helirio, Vertical Rio.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Consultar disponibilidad con operadora</span></div>
+            <div class="meta-row"><span class="meta-icon">🚁</span><span class="meta-text">Doors-off hasta R$ 1.999</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Ala Delta / Parapente ⭐<br/><small style="color:#aaa;font-weight:400;">Pedra Bonita → São Conrado</small></div>
+          <span class="badge badge-precio">R$ 900–1.100 (~$669.600–818.400)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Vuelo en tándem con instructor desde la rampa de Pedra Bonita, aterrizando en la playa de São Conrado. ¡Vista alucinante! 8–30 min de vuelo.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Según condición del viento (generalmente mañana)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Escadaria Selarón<br/><small style="color:#aaa;font-weight:400;">Lapa — 215 peldaños</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Escalera de 215 peldaños decorada con azulejos de 60 países. Obra del artista chileno Jorge Selarón. Acceso libre 24h.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">24h — <strong>Siempre gratuito</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SAMBA RIO -->
+  <div id="rio-samba" class="group-content">
+    <div class="group-header g-samba">🎶 Samba y Vida Cultural Nocturna</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Pedra do Sal ⭐<br/><small style="color:#aaa;font-weight:400;">Cuna histórica del samba carioca</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Roda de samba al aire libre en el barrio de la Saúde (Centro histórico). Ambiente auténtico y local.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lunes</strong> desde 19h–24h · <strong>Vie/Sáb/Dom</strong> desde 18h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Rio Scenarium<br/><small style="color:#aaa;font-weight:400;">Lapa — 3 pisos de samba</small></div>
+          <span class="badge badge-precio">R$ 40–70 (~$29.760–52.080)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Bar de samba en 3 pisos con decoración de antigüedades. Música en vivo, show de samba. Lo más icónico de Lapa.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Jue–Sáb</strong> desde 19h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Arcos da Lapa<br/><small style="color:#aaa;font-weight:400;">Acueducto histórico 1750</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Acueducto histórico que se convierte en zona de bares y samba en vivo cada noche. El barrio más bohemio de Río.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Desde 19h</span></div>
+            <div class="meta-row"><span class="meta-icon">🍺</span><span class="meta-text">Gratis entrar (consumo en bares)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Carioca da Gema<br/><small style="color:#aaa;font-weight:400;">Samba tradicional en Lapa</small></div>
+          <span class="badge badge-precio">R$ 30–50 cover</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Bar de samba tradicional en Lapa. Música en vivo todas las noches, muy popular entre locales y turistas.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> desde 19h30</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Boate La Cueva<br/><small style="color:#aaa;font-weight:400;">Copacabana — LGBTQ+ friendly</small></div>
+          <span class="badge badge-precio">R$ 40–80 cover</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Discoteca LGBTQ+ friendly. Drag shows, música brasileña, pop y funk. Muy animada jue–dom.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Jue–Dom</strong> desde 22h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Termas Up House<br/><small style="color:#aaa;font-weight:400;">Lapa — Club nocturno</small></div>
+          <span class="badge badge-precio">R$ 60–100 cover</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Club nocturno de Lapa con DJs, música electrónica y funk.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Vie–Sáb</strong> desde 22h</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMIDA RIO -->
+  <div id="rio-comida" class="group-content">
+    <div class="group-header g-comida">🍽️ Comida y Bebidas — Qué Probar en Río</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Feijoada<br/><small style="color:#aaa;font-weight:400;">El plato nacional</small></div>
+          <span class="badge badge-precio">R$ 45–80 por persona</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Fríjoles negros con carnes de cerdo, arroz, farofa, couve (col), naranja y torresmo. Se come los sábados.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Garota de Ipanema, restaurantes de Lapa</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Filé Oswaldo Aranha<br/><small style="color:#aaa;font-weight:400;">Plato carioca clásico</small></div>
+          <span class="badge badge-precio">R$ 59 (~$43.900 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Carne de res con ajo frito, papas portuguesas, farofa de bacon. Plato carioca clásico.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text"><strong>Garota de Ipanema</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Picanha na chapa<br/><small style="color:#aaa;font-weight:400;">Para compartir entre 3</small></div>
+          <span class="badge badge-precio">R$ 98–150 por porción</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Corte especial de res a la parrilla, el más amado de Brasil. Perfecto para compartir entre las tres.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Garota de Ipanema, churrascarias</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Bolinhos de Bacalhau<br/><small style="color:#aaa;font-weight:400;">Croquetas de bacalao</small></div>
+          <span class="badge badge-precio">R$ 25–35 por porción</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Croquetas de bacalao crujientes. Perfectas para picotear con una cerveza.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Confeitaria Colombo, botecos</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Caipirinha de limão<br/><small style="color:#aaa;font-weight:400;">Cóctel nacional</small></div>
+          <span class="badge badge-precio">R$ 9–20 (~$6.700–14.880)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">El cóctel nacional hecho con cachaça, lima, azúcar y hielo. El más pedido en cualquier bar de Río.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Todo bar y restaurante</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Mate gelado na praia<br/><small style="color:#aaa;font-weight:400;">Tradición carioca</small></div>
+          <span class="badge badge-precio">R$ 5–8 (~$3.720 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Té mate frío vendido en la playa con azúcar y limón. Tradición 100% carioca.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Vendedores en Copacabana e Ipanema</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Pão de queijo<br/><small style="color:#aaa;font-weight:400;">Típico del desayuno brasileño</small></div>
+          <span class="badge badge-precio">R$ 3–5</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Pancito esponjoso de queso. Típico del desayuno brasileño. Infaltable.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text">Padarias y cafeterías</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Chá da tarde — Colombo ⭐<br/><small style="color:#aaa;font-weight:400;">Café do Forte, Copacabana</small></div>
+          <span class="badge badge-precio">R$ 147,20 dúo (~$109.500)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Experiencia completa de té de la tarde en el café histórico de 1894. Vistas al mar desde el Forte de Copacabana.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">📍</span><span class="meta-text"><strong>Confeitaria Colombo Café do Forte</strong> — Copacabana</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESTAURANTES RIO -->
+  <div id="rio-restaurantes" class="group-content">
+    <div class="group-header g-restaurantes">🍴 Restaurantes Destacados en Río</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Garota de Ipanema ⭐<br/><small style="color:#aaa;font-weight:400;">Rua Vinícius de Moraes, 49 – Ipanema</small></div>
+          <span class="badge badge-precio">R$ 60–100 (~$44.640–74.400)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Bar-restaurante donde Tom Jobim y Vinicius de Moraes compusieron "La Chica de Ipanema". Cocina brasileña clásica, ambiente histórico.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Todos los días</strong> 11h–00h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Confeitaria Colombo Centro ⭐<br/><small style="color:#aaa;font-weight:400;">Rua Gonçalves Dias, 32 – Centro</small></div>
+          <span class="badge badge-precio">R$ 70 (~$52.080) buffet</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Café histórico art nouveau. Buffet de almuerzo excelente. Entrada libre al café.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Lun–Sáb</strong> 11h–18h / Buffet 12h–16h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Colombo Café do Forte<br/><small style="color:#aaa;font-weight:400;">Forte de Copacabana</small></div>
+          <span class="badge badge-precio">R$ 50–150 por persona</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Sucursal frente al mar. Brunch, chá da tarde, excelentes vistas al océano. A pasos del apartamento.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> 10h–19h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Aprazível<br/><small style="color:#aaa;font-weight:400;">Rua Aprazível, 62 – Santa Teresa</small></div>
+          <span class="badge badge-precio">R$ 100–180 por persona</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Restaurante en Santa Teresa con vista panorámica de Río. Cocina brasileña autoral en jardín tropical.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Dom</strong> almuerzo y cena</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Olympe<br/><small style="color:#aaa;font-weight:400;">Rua Custódio Serrão, 62 – Lagoa</small></div>
+          <span class="badge badge-precio">R$ 200–300 por persona</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Alta cocina brasileña contemporánea de Claude Troisgros. Uno de los mejores restaurantes de Río.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text"><strong>Mar–Sáb</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ESPECIAL RIO -->
+  <div id="rio-especial" class="group-content">
+    <div class="group-header g-especial">🌅 Experiencias Únicas y Actividades Especiales</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Amanecer en Copacabana 🏠<br/><small style="color:#aaa;font-weight:400;">Desde su apartamento</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Ver salir el sol sobre el mar desde el apartamento o la playa. El amanecer en Río es mágico (alrededor de 5h30–6h en mayo).</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">~5h30 en mayo</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Puesta de sol en Pão de Açúcar ⭐<br/><small style="color:#aaa;font-weight:400;">Vista más impresionante de Río</small></div>
+          <span class="badge badge-precio">R$ 220 (~$163.680 COP)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Ver el atardecer desde la cima del Pan de Azúcar es una de las experiencias más impresionantes de Río. Reservar entrada para la tarde.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">17h–19h30</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Puesta de sol en Arpoador ⭐<br/><small style="color:#aaa;font-weight:400;">Ritual carioca diario</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">La roca entre Ipanema y Copacabana donde locales y turistas aplauden el atardecer. Ritual diario carioca. ¡No lo pierdan!</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">~17h30–18h30</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Caminata Dois Irmãos<br/><small style="color:#aaa;font-weight:400;">Vista épica Ipanema y Leblon</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Caminata de 2h con vista épica sobre Ipanema y Leblon desde los cerros. Gratis con guía o sin guía.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Mañanas (salida ~7h)</span></div>
+            <div class="meta-row"><span class="meta-icon">👤</span><span class="meta-text">Guía opcional ~R$ 50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Tour Favela Santa Marta / Vidigal<br/><small style="color:#aaa;font-weight:400;">Experiencia cultural única</small></div>
+          <span class="badge badge-precio">R$ 50–100 (~$37.200–74.400)</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Tours guiados responsables por comunidades. Vista de Río desde la loma. Experiencia cultural única e imperdible.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Mañanas / tardes</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Cine de playa en Ipanema<br/><small style="color:#aaa;font-weight:400;">Películas al aire libre</small></div>
+          <span class="badge badge-gratis">GRATIS</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Películas al aire libre en la playa. Verificar programación en mayo. Experiencia típica carioca.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">🕐</span><span class="meta-text">Noches de fin de semana</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BARRIOS RIO -->
+  <div id="rio-barrios" class="group-content">
+    <div class="group-header g-barrios">🌏 Zonas Turísticas — Barrios de Río</div>
+    <br/>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Copacabana 🏠<br/><small style="color:#aaa;font-weight:400;">Su base de operaciones</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">La zona más famosa. Playa, hoteles, restaurantes, vida nocturna. Donde se hospedan — todo al alcance a pie.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Playa, puesta de sol, discotecas, mercadillos</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Ipanema / Leblon<br/><small style="color:#aaa;font-weight:400;">Barrios chic y sofisticados</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Mejores restaurantes, tiendas de diseño y la playa más bella de Río.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Garota de Ipanema, puesta sol Arpoador, tiendas</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Lapa<br/><small style="color:#aaa;font-weight:400;">Corazón de la música carioca</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Barrio bohemio y cultural. Samba, bares, nightlife. El alma musical de Río de Janeiro.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Pedra do Sal, Arcos da Lapa, Rio Scenarium</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Santa Teresa<br/><small style="color:#aaa;font-weight:400;">Barrio histórico en el morro</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Casas coloniales, artistas, restaurantes, tranvía (bonde). El barrio más pintoresco de Río.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Aprazível, arte callejero, Museu Chácara do Céu</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Centro Histórico<br/><small style="color:#aaa;font-weight:400;">Puerto Maravilla y museos</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Centro de negocios con edificios coloniales, el Puerto Maravilla, museos y el Gabinete Portugués.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Real Gabinete, Confeitaria Colombo, Museu do Amanhã</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Barra da Tijuca<br/><small style="color:#aaa;font-weight:400;">Barrio moderno y playero</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Barrio moderno al oeste. Shopping, playa extensa, surf.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Playa Barra, shopping, AquaRio</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-name">Urca<br/><small style="color:#aaa;font-weight:400;">Al pie del Pan de Azúcar</small></div>
+          <span class="badge badge-gratis">GRATIS EXPLORAR</span>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Barrio tranquilo al pie del Pan de Azúcar. Praia Vermelha, bares informales sobre el mar.</p>
+          <div class="card-meta">
+            <div class="meta-row"><span class="meta-icon">⭐</span><span class="meta-text">Bondinho, Praia Vermelha, botecos</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FREE INFO RIO -->
+  <div class="free-info-section">
+    <h3>🆓 Resumen de Horarios Gratuitos — Río de Janeiro</h3>
+    <ul class="free-list">
+      <li><span class="free-badge">LUN–VIE</span><div><strong>Real Gabinete Português de Leitura</strong> — Gratis de lunes a viernes 9h–18h (cerrado fines de semana)</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Parque Lage</strong> — Acceso libre todos los días 8h–17h</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Floresta da Tijuca + Vista Chinesa</strong> — Gratuito todos los días (algunas atracciones internas pagan)</div></li>
+      <li><span class="free-badge">SIEMPRE</span><div><strong>Todas las playas</strong> — Copacabana, Ipanema, Leblon, Joatinga, Praia Vermelha, Prainha — siempre gratuitas</div></li>
+      <li><span class="free-badge">24H</span><div><strong>Escadaria Selarón (Lapa)</strong> — Acceso libre las 24 horas del día</div></li>
+      <li><span class="free-badge">LUN / FIN SEM</span><div><strong>Pedra do Sal (samba)</strong> — Gratis los lunes desde 19h y vie/sáb/dom desde 18h</div></li>
+      <li><span class="free-badge">NOCHES</span><div><strong>Arcos da Lapa</strong> — Gratis entrar, zona de bares desde 19h todos los días</div></li>
+      <li><span class="free-badge">~5H30</span><div><strong>Amanecer en Copacabana</strong> — Desde la playa o el apartamento, completamente gratis</div></li>
+      <li><span class="free-badge">~17H30</span><div><strong>Puesta de sol en Arpoador</strong> — Ritual carioca gratuito entre Ipanema y Copacabana</div></li>
+      <li><span class="free-badge">MAÑANAS</span><div><strong>Caminata Dois Irmãos</strong> — Gratis (guía opcional ~R$ 50)</div></li>
+      <li><span class="free-badge">FIN SEM</span><div><strong>Cine de playa en Ipanema</strong> — Gratis, noches de fin de semana (verificar programación mayo)</div></li>
+      <li><span class="free-badge">ENTRADA LIBRE</span><div><strong>Confeitaria Colombo (Centro)</strong> — Entrada libre al café. Buffet almuerzo R$ 69,90</div></li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="text-align:center;padding:30px;color:#555;font-size:0.82rem;border-top:1px solid rgba(255,255,255,0.07);margin-top:20px;">
+  🇧🇷 Guía Turística Brasil 2025 · Janna, Juan y Alison · 1 BRL ≈ $744 COP (mayo 2025)
+</footer>
+
+<script>
+  function showCity(city) {
+    document.querySelectorAll('.city-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('city-' + city).classList.add('active');
+    document.querySelectorAll('.city-btn').forEach(b => {
+      if (b.classList.contains(city)) b.classList.add('active');
+    });
+  }
+
+  function showGroup(city, group, btn) {
+    const section = document.getElementById('city-' + city);
+    section.querySelectorAll('.group-content').forEach(g => g.classList.remove('active'));
+    section.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(city + '-' + group).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Show SP by default
+  showCity('sp');
+</script>
+
+</body>
+</html>
